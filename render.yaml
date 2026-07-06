@@ -10,7 +10,7 @@ services:
     name: n8n-worldcup
     runtime: image
     image:
-      url: docker.n8n.io/n8nio/n8n:latest
+      url: docker.io/n8nio/n8n:latest
     plan: free
     region: oregon              # US region -> Telegram/Meta reachable
     healthCheckPath: /healthz
