@@ -1,0 +1,15 @@
+# Secrets — never commit
+.env
+.env.*
+*.local
+
+# n8n runtime data — contains encryption key (config) and credentials (database.sqlite)
+n8n_data/
+.n8n/
+
+# Local file mounts
+local_files/
+
+# Workflow exports contain the football-data API key inline — keep out of git.
+# Import these into n8n manually via the UI instead.
+wc-*.json

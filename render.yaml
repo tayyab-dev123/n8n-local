@@ -1,0 +1,35 @@
+# Render Blueprint for n8n (FREE plan) — deploy World Cup workflows outside Pakistan.
+# Secrets are NOT stored here: every sensitive var uses `sync: false`, so you type
+# it once in the Render dashboard and it never touches git.
+#
+# Free-plan notes:
+#  - No persistent disk -> the n8n DB is ephemeral (re-import workflows after a restart).
+#  - Service sleeps after ~15 min idle -> schedules won't fire; use manual "Execute" to verify.
+services:
+  - type: web
+    name: n8n-worldcup
+    runtime: image
+    image:
+      url: docker.n8n.io/n8nio/n8n:latest
+    plan: free
+    region: oregon              # US region -> Telegram/Meta reachable
+    healthCheckPath: /healthz
+    envVars:
+      - key: N8N_PORT
+        value: "10000"          # Render routes to port 10000
+      - key: N8N_PROTOCOL
+        value: https
+      - key: N8N_SECURE_COOKIE
+        value: "true"
+      - key: N8N_RUNNERS_ENABLED
+        value: "true"
+      - key: GENERIC_TIMEZONE
+        value: Asia/Karachi
+      - key: TZ
+        value: Asia/Karachi
+      - key: N8N_ENCRYPTION_KEY
+        generateValue: true     # Render generates + persists this; not in git
+      - key: N8N_HOST
+        sync: false             # set to <service>.onrender.com after 1st deploy
+      - key: WEBHOOK_URL
+        sync: false             # https://<service>.onrender.com/
